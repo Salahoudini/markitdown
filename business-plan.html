@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioHealth Solutions Nigeria - Business Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Savanna Health -->
+    <!-- Application Structure Plan: The application is designed as a single-page, scrollable narrative that functions like an interactive pitch deck. The structure is thematic, guiding the user from the high-level vision down to the specific problems, solutions, and impact. A fixed top navigation allows users to jump to any section, facilitating both linear reading and non-linear exploration. This structure was chosen because a business plan is a story; this format tells that story in a modern, digestible, and engaging way, breaking down complex ideas into interactive sections (like the 'Solutions' tabs and data charts) which is more effective for user understanding than a static document. -->
+    <!-- Visualization & Content Choices: 
+        1. Report Info: Prevalence of infectious diseases in Nigeria. -> Goal: Inform/Establish Need. -> Viz: Interactive Bar Chart. -> Interaction: Hover for details, button to toggle data view (Cases vs. Economic Burden). -> Justification: Visualizing the scale of the problem is more impactful than text alone; interactivity engages the user. -> Library: Chart.js.
+        2. Report Info: Core services (Diagnostics, Data Analytics, Training). -> Goal: Organize/Explain. -> Viz: Tabbed content section. -> Interaction: User clicks a tab to reveal detailed content for that service. -> Justification: Breaks down the core business model into manageable, user-selected chunks, preventing information overload. -> Library/Method: Vanilla JS + Tailwind.
+        3. Report Info: Commercial viability. -> Goal: Compare/Inform. -> Viz: Interactive Donut Chart showing market segments. -> Interaction: Hover to see percentage share. -> Justification: A donut chart is an excellent and simple way to show the composition of the target market. -> Library: Chart.js.
+        4. Report Info: Social relevance and impact. -> Goal: Inform/Organize. -> Viz: Icon-driven card layout. -> Interaction: Static display with hover effects. -> Justification: Uses strong visual cues (icons) for quick scanning and comprehension of the key social benefits. -> Library/Method: HTML/Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #333D42;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #16A34A; /* A vibrant green */
+        }
+        .solution-tab.active {
+            background-color: #16A34A;
+            color: #ffffff;
+            border-color: #16A34A;
+        }
+        .chart-container {
+            position: relative;
+            height: 40vh;
+            width: 100%;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-gray-800">
+                <span class="text-green-600">BioHealth</span> Solutions
+            </h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#vision" class="nav-link text-gray-600 font-medium">Vision</a>
+                <a href="#problem" class="nav-link text-gray-600 font-medium">The Problem</a>
+                <a href="#solutions" class="nav-link text-gray-600 font-medium">Our Solutions</a>
+                <a href="#impact" class="nav-link text-gray-600 font-medium">Impact</a>
+                <a href="#market" class="nav-link text-gray-600 font-medium">Market</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-gray-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+             <a href="#vision" class="block py-2 nav-link text-gray-600 font-medium">Vision</a>
+             <a href="#problem" class="block py-2 nav-link text-gray-600 font-medium">The Problem</a>
+             <a href="#solutions" class="block py-2 nav-link text-gray-600 font-medium">Our Solutions</a>
+             <a href="#impact" class="block py-2 nav-link text-gray-600 font-medium">Impact</a>
+             <a href="#market" class="block py-2 nav-link text-gray-600 font-medium">Market</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="vision" class="py-20 md:py-28 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-4">Pioneering Biotech and Public Health Solutions for Nigeria</h2>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                    We are establishing a biotechnology and public health enterprise dedicated to tackling Nigeria's most pressing health challenges through affordable diagnostics, data-driven analytics, and local capacity building. Our mission is to blend scientific innovation with digital tools to create a healthier, more resilient future for all.
+                </p>
+            </div>
+        </section>
+
+        <section id="problem" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold mb-4">Addressing Nigeria's Health Burden</h3>
+                    <p class="text-gray-600">
+                        Nigeria faces significant challenges from prevalent infectious diseases that strain an already under-resourced healthcare system. This section visualizes the scale of the problem our enterprise aims to address. You can interact with the chart below to understand both the human and economic costs associated with these diseases.
+                    </p>
+                </div>
+                <div class="bg-white p-4 sm:p-8 rounded-2xl shadow-lg max-w-4xl mx-auto">
+                    <div class="flex justify-center mb-4 space-x-2">
+                        <button id="cases-btn" class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-full focus:outline-none">Annual Cases</button>
+                        <button id="burden-btn" class="px-4 py-2 text-sm font-medium text-green-600 bg-green-100 rounded-full focus:outline-none">Economic Burden</button>
+                    </div>
+                    <div class="chart-container mx-auto max-w-2xl">
+                        <canvas id="diseaseChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold mb-4">Our Integrated Solutions</h3>
+                    <p class="text-gray-600">
+                        Our enterprise is built on three core pillars designed to create a synergistic impact on public health. Each service complements the others, building a comprehensive ecosystem for disease prevention, monitoring, and local empowerment. Click on each tab to explore our proposed services in detail.
+                    </p>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex flex-wrap justify-center border-b border-gray-200 mb-8">
+                        <button class="solution-tab flex-grow sm:flex-grow-0 text-center py-3 px-6 border-b-2 font-medium text-lg focus:outline-none active" data-tab="diagnostics">
+                           🔬 Affordable Diagnostics
+                        </button>
+                        <button class="solution-tab flex-grow sm:flex-grow-0 text-center py-3 px-6 border-b-2 font-medium text-lg focus:outline-none" data-tab="analytics">
+                           📊 Health Data Analytics
+                        </button>
+                        <button class="solution-tab flex-grow sm:flex-grow-0 text-center py-3 px-6 border-b-2 font-medium text-lg focus:outline-none" data-tab="training">
+                           🎓 Capacity Building
+                        </button>
+                    </div>
+
+                    <div id="solution-content" class="min-h-[250px] transition-opacity duration-300">
+                        <div class="solution-panel" id="diagnostics-content">
+                            <h4 class="text-2xl font-bold mb-3">Low-Cost Diagnostic Kits</h4>
+                            <p class="text-gray-600">
+                                We will specialize in developing and distributing low-cost, rapid, point-of-care diagnostic kits for infectious diseases prevalent in Nigeria, such as malaria, mpox, and Lassa fever. By leveraging modern biotechnologies, we can provide accurate and accessible testing solutions that enable faster diagnosis and treatment, even in remote communities. This is critical for controlling outbreaks and reducing mortality rates.
+                            </p>
+                        </div>
+                        <div class="solution-panel hidden" id="analytics-content">
+                            <h4 class="text-2xl font-bold mb-3">Immunization Monitoring Platforms</h4>
+                            <p class="text-gray-600">
+                                Our company will offer data-driven immunization monitoring platforms. These digital tools will help government agencies and NGOs track vaccination coverage in real-time, identify underserved areas, and optimize resource allocation. By harnessing the power of data analytics and machine learning, we can enhance the effectiveness of public health campaigns and ensure equitable vaccine distribution.
+                            </p>
+                        </div>
+                        <div class="solution-panel hidden" id="training-content">
+                            <h4 class="text-2xl font-bold mb-3">Bioinformatics & Data Analysis Training</h4>
+                            <p class="text-gray-600">
+                                To build a sustainable ecosystem, we will offer specialized training programs in bioinformatics and health data analysis for students and young graduates. This initiative will build local capacity in high-demand fields, create job opportunities, and empower the next generation of Nigerian scientists to contribute to the country's development and solve local health problems with cutting-edge skills.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                 <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold mb-4">A Socially Relevant Venture</h3>
+                    <p class="text-gray-600">
+                        Beyond commercial viability, our core mission is to generate significant social impact. By operating at the intersection of biotechnology and public health, we aim to create a multi-faceted positive change that strengthens Nigeria's health infrastructure and empowers its people.
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="bg-white p-8 rounded-xl shadow-md text-center hover:shadow-xl transition-shadow">
+                        <div class="text-5xl mb-4">🛡️</div>
+                        <h4 class="text-xl font-bold mb-2">Strengthen Disease Surveillance</h4>
+                        <p class="text-gray-600">Our diagnostics and data platforms will provide critical, real-time information to health authorities, enabling faster and more effective responses to disease outbreaks.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-md text-center hover:shadow-xl transition-shadow">
+                        <div class="text-5xl mb-4">📈</div>
+                        <h4 class="text-xl font-bold mb-2">Improve Public Health Outcomes</h4>
+                        <p class="text-gray-600">By making diagnostics more accessible and vaccination campaigns more efficient, we directly contribute to reducing disease prevalence and saving lives.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-md text-center hover:shadow-xl transition-shadow">
+                        <div class="text-5xl mb-4">🧠</div>
+                        <h4 class="text-xl font-bold mb-2">Empower Local Talent</h4>
+                        <p class="text-gray-600">Our training programs will equip young Nigerians with high-demand skills, fostering innovation and creating a skilled workforce for the future of African biotech.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="market" class="py-16 md:py-24 bg-white">
+             <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold mb-4">Market Opportunity</h3>
+                    <p class="text-gray-600">
+                        The need for advanced public health solutions in Nigeria presents a significant and diverse market opportunity. Our services are positioned to cater to a range of key stakeholders dedicated to improving health outcomes. The chart illustrates our primary target market segments.
+                    </p>
+                </div>
+                <div class="bg-white p-4 sm:p-8 rounded-2xl shadow-lg max-w-4xl mx-auto">
+                    <div class="chart-container mx-auto max-w-md">
+                         <canvas id="marketChart"></canvas>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 BioHealth Solutions Nigeria. All rights reserved.</p>
+            <p class="text-sm text-gray-400 mt-2">Innovating for a healthier tomorrow.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            const solutionTabs = document.querySelectorAll('.solution-tab');
+            const solutionPanels = document.querySelectorAll('.solution-panel');
+            const solutionContent = document.getElementById('solution-content');
+
+            solutionTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    solutionTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const target = tab.dataset.tab;
+                    
+                    solutionContent.style.opacity = '0';
+
+                    setTimeout(() => {
+                        solutionPanels.forEach(panel => {
+                            if (panel.id === `${target}-content`) {
+                                panel.classList.remove('hidden');
+                            } else {
+                                panel.classList.add('hidden');
+                            }
+                        });
+                        solutionContent.style.opacity = '1';
+                    }, 150);
+                });
+            });
+
+            const diseaseData = {
+                cases: {
+                    labels: ['Malaria', 'Lassa Fever', 'Mpox'],
+                    data: [22000000, 800, 900], 
+                    label: 'Estimated Annual Cases'
+                },
+                burden: {
+                    labels: ['Malaria', 'Lassa Fever', 'Mpox'],
+                    data: [480, 5, 2],
+                    label: 'Economic Burden (Billion ₦)'
+                }
+            };
+            
+            let diseaseChart;
+            const ctxDisease = document.getElementById('diseaseChart').getContext('2d');
+
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                     label += new Intl.NumberFormat('en-NG').format(context.parsed.y);
+                                     if(context.dataset.isBurden) {
+                                         label += ' Billion ₦';
+                                     }
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Count'
+                        }
+                    }
+                }
+            };
+
+            function createDiseaseChart(dataType) {
+                if (diseaseChart) {
+                    diseaseChart.destroy();
+                }
+
+                const dataConfig = diseaseData[dataType];
+                const newOptions = JSON.parse(JSON.stringify(chartOptions));
+                newOptions.scales.y.title.text = dataType === 'cases' ? 'Estimated Annual Cases' : 'Economic Burden (Billion ₦)';
+
+                diseaseChart = new Chart(ctxDisease, {
+                    type: 'bar',
+                    data: {
+                        labels: dataConfig.labels,
+                        datasets: [{
+                            label: dataConfig.label,
+                            data: dataConfig.data,
+                            backgroundColor: ['#34D399', '#FBBF24', '#F87171'],
+                            borderColor: ['#10B981', '#F59E0B', '#EF4444'],
+                            borderWidth: 1,
+                            isBurden: dataType === 'burden'
+                        }]
+                    },
+                    options: newOptions
+                });
+            }
+
+            createDiseaseChart('cases');
+
+            const casesBtn = document.getElementById('cases-btn');
+            const burdenBtn = document.getElementById('burden-btn');
+
+            casesBtn.addEventListener('click', () => {
+                createDiseaseChart('cases');
+                casesBtn.classList.add('bg-green-600', 'text-white');
+                casesBtn.classList.remove('bg-green-100', 'text-green-600');
+                burdenBtn.classList.add('bg-green-100', 'text-green-600');
+                burdenBtn.classList.remove('bg-green-600', 'text-white');
+            });
+
+            burdenBtn.addEventListener('click', () => {
+                createDiseaseChart('burden');
+                burdenBtn.classList.add('bg-green-600', 'text-white');
+                burdenBtn.classList.remove('bg-green-100', 'text-green-600');
+                casesBtn.classList.add('bg-green-100', 'text-green-600');
+                casesBtn.classList.remove('bg-green-600', 'text-white');
+            });
+            
+            const ctxMarket = document.getElementById('marketChart').getContext('2d');
+            new Chart(ctxMarket, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Public Health Agencies', 'NGOs & Aid Organizations', 'Private Healthcare', 'Academic & Research'],
+                    datasets: [{
+                        label: 'Market Segments',
+                        data: [45, 30, 15, 10],
+                        backgroundColor: [
+                            '#34D399',
+                            '#60A5FA',
+                            '#FBBF24',
+                            '#A78BFA'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
